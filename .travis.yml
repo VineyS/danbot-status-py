@@ -9,5 +9,6 @@ python:
   - "3.8"
 before_script:
   - pip3 install requests==2.24.0
+  - cd danbotstatus
 script:
-  - cd danbotstatus; python3 -m pytest dbhs.py
+  -python3 -m pytest dbhs.py
