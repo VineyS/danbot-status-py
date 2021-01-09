@@ -146,7 +146,7 @@ def getleaderboard():
         error = f"Error when fetching, please try again! Status Code : {r.status_code}"
         return error
 
-print(getleaderboard())
+
 
 
     
