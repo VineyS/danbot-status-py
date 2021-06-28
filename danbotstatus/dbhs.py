@@ -5,18 +5,17 @@ leaderboard = "https://api.danbot.host/leaderboard"
 ######################################
 #####     GETTING ALL STATUS     #####
 ######################################
-class DanBotStatus:
-    async def getallstats():
+async def getallstats():
     """
     Fetches the basic json from nodestatus 
     """
-        async with aiohttp.ClientSession() as session:
-            async with session.get(base) as resp:
-                if resp.status == 200:
-                    return await resp.json()          ## RETURNS ALL STATUS IN DICTIONARY
-                else:
-                    error = f"Error when fetching, please try again! Status Code : " + str(resp.status)
-                    raise ConnectionError(error)
+    async with aiohttp.ClientSession() as session:
+        async with session.get(base) as resp:
+            if resp.status == 200:
+                return await resp.json()          ## RETURNS ALL STATUS IN DICTIONARY
+            else:
+                error = f"Error when fetching, please try again! Status Code : " + str(resp.status)
+                raise ConnectionError(error)
 
 ######################################
 ####   GETTING ONLY NODE STATUS   ####
