@@ -1,4 +1,5 @@
 # danbot-status
+![travis-ci](https://travis-ci.com/VineyS/danbot-status-py.svg?branch=main)
 
 DanBot Status is a module built in python for getting all statistical services used by DanBotHost.
 
