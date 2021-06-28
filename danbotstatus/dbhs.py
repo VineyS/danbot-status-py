@@ -57,7 +57,7 @@ async def getnodestats(val=1):
                         error = "Node number can't be a negative value!"
                         return ValueError(error)
                     elif int(val) > 0 and int(val) <= len(nodestatus):
-                        result = nodestatus[f"Node{val}"]
+                        result = nodestatus["Node" + str(val)]
                         return result                  # Returns Particular Node Status In Dictionary
                 else:
                     error = "Error when fetching, please try again! Status Code : " + str(resp.status)
@@ -105,7 +105,7 @@ async def getlavastats(val=1):
                         return error
                     elif int(val) > 0 and int(val) <= len(misc):
                         try:
-                            result = misc[f'Lava{val}']
+                            result = misc['Lava' + str(val)]
                         except KeyError as e:
                             rerror = f"{e} was not found! "
                             return rerror
@@ -155,7 +155,7 @@ async def getsysinfo(val=1):
                         error = "Node number can't be a negative value!"
                         return error
                     elif int(val) > 0 and int(val) <= len(cache):
-                        result = cache[f"Node{val}"]
+                        result = cache["Node"+ str(val)]
                         return result
 
                 else:
