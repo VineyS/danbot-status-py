@@ -1,26 +1,27 @@
 import aiohttp
-base = "https://danbot.host/nodeStatus"
-sysinfo = 'https://danbot.host/sysinfo'
-leaderboard = "https://api.danbot.host/leaderboard"
-######################################
-#####     GETTING ALL STATUS     #####
-######################################
-async def getallstats():
+
+class DBS():
+    def __init__(self):
+        base = "https://danbot.host/nodeStatus"
+        sysinfo = 'https://danbot.host/sysinfo'
+        leaderboard = "https://api.danbot.host/leaderboard"
+
+    async def getallstats():
     """
     Fetches the basic json from nodestatus 
     """
-    async with aiohttp.ClientSession() as session:
-        async with session.get(base) as resp:
-            if resp.status == 200:
-                return await resp.json()          ## RETURNS ALL STATUS IN DICTIONARY
-            else:
-                error = f"Error when fetching, please try again! Status Code : " + str(resp.status)
-                raise ConnectionError(error)
+        async with aiohttp.ClientSession() as session:
+            async with session.get(base) as resp:
+                if resp.status == 200:
+                    return await resp.json()          ## RETURNS ALL STATUS IN DICTIONARY
+                else:
+                    error = f"Error when fetching, please try again! Status Code : " + str(resp.status)
+                    raise ConnectionError(error)
 
 ######################################
 ####   GETTING ONLY NODE STATUS   ####
 ######################################
-
+"""
 def getallnodestats():
     r = requests.get(base)
     if r.status_code == 200:
@@ -149,7 +150,7 @@ def getleaderboard():
         error = f"Error when fetching, please try again! Status Code : {r.status_code}"
         return error
 
-
+"""
 
 
     
