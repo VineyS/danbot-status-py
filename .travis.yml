@@ -12,7 +12,7 @@ python:
   - "3.7"
   - "3.8"
 before_script:
-  - pip3 install aiohttp>=3.6.0,<3.8.0
+  - pip3 install aiohttp>=3.6.0
   - cd danbotstatus
 script:
   - python3 dbhs.py
