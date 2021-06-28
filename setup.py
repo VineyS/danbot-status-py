@@ -5,9 +5,9 @@ with open("README.md", "r", encoding="utf-8") as fh:
 
 setuptools.setup(
     name="danbot-status", # Replace with your own username
-    version="0.0.1",
+    version="0.0.2",
     author="VineyS",
-    author_email="contact@roxy.host",
+    author_email="vineypsunu@gmail.com",
     description="Status Of All Services of DanBotHost(DBH)",
     long_description=long_description,
     long_description_content_type="text/markdown",
@@ -18,6 +18,6 @@ setuptools.setup(
         "License :: OSI Approved :: MIT License",
         "Operating System :: OS Independent",
     ],
-    install_requires=["requests == 2.24.0"],
+    install_requires=["aiohttp>=3.6.0,<3.8.0"],
     python_requires='>=3.6',
 )
