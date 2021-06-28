@@ -17,7 +17,6 @@ async def getallstats():
             else:
                 error = f"Error when fetching, please try again! Status Code : " + str(resp.status)
                 raise ConnectionError(error)
-        
 
 ######################################
 ####   GETTING ONLY NODE STATUS   ####
