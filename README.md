@@ -32,7 +32,7 @@ async def on_message(message):
 bot.run("TOKEN")
 ```
 # Basic Functions in the module
-
+*pssst, this is not an example , this just shows the functions the module has*
 ```py
 import danbotstatus as dbhs
 allnodestats = await dbhs.getallnodestats()   # Gets All Node Status
