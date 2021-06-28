@@ -11,6 +11,7 @@ python:
   - "3.6"
   - "3.7"
   - "3.8"
+  - "3.9"
 before_script:
   - pip3 install aiohttp>=3.6.0
   - cd danbotstatus
