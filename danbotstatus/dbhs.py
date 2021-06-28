@@ -1,157 +1,178 @@
 import aiohttp
+base = "https://danbot.host/nodeStatus"
+sysinfo = 'https://danbot.host/sysinfo'
+leaderboard = "https://api.danbot.host/leaderboard"
 
-class DBS():
-    def __init__(self):
-        self.base = "https://danbot.host/nodeStatus"
-        self.sysinfo = 'https://danbot.host/sysinfo'
-        self.leaderboard = "https://api.danbot.host/leaderboard"
 
-    async def getallstats():
+async def getallstats():
     """
-    Fetches the basic json from nodestatus 
+    Fetches the basic json from base url, this method returns a dictionary
     """
+    async with aiohttp.ClientSession() as session:
+        async with session.get(base) as resp:
+            if resp.status == 200:
+                return await resp.json()
+            else:
+                error = f"Error when fetching, please try again! Status Code : " + str(resp.status)
+                return error
+
+
+async def getallnodestats():
+    """
+    Fetches the data related to nodes only, this method returns a dictionary
+    """
+    async with aiohttp.ClientSession() as session:
+        async with session.get(base) as resp:
+            if resp.status == 200:
+                cache = await resp.json()
+                nodestats = cache['nodestatus']
+                return nodestats
+            else:
+                error = f"Error when fetching, please try again! Status Code : " + str(resp.status)
+                return error
+
+
+async def getnodestats(val=1):
+    """
+    Fetches a particular node statistics
+    ...
+    Parameters
+    ----------
+    val : An int value, by default its set to 1
+    here, the node number has to be inputted. Example: getnodestats(2) returns data for Node 2
+    """
+    if isinstance(val, int) is False:
+        raise ValueError("val parameter has to be integer only!")
+
+    else:
         async with aiohttp.ClientSession() as session:
-            async with session.get(self.base) as resp:
+            async with session.get(base) as resp:
                 if resp.status == 200:
-                    return await resp.json()          ## RETURNS ALL STATUS IN DICTIONARY
+                    cache = await resp.json()
+                    nodestatus = cache['nodestatus']
+                    if int(val) == 0:
+                        error = "Node 0 wasn't found!"
+                        raise error
+                    elif int(val) < 0:
+                        error = "Node number can't be a negative value!"
+                        return ValueError(error)
+                    elif int(val) > 0 and int(val) <= len(nodestatus):
+                        result = nodestatus[f"Node{val}"]
+                        return result                  # Returns Particular Node Status In Dictionary
                 else:
-                    error = f"Error when fetching, please try again! Status Code : " + str(resp.status)
-                    raise ConnectionError(error)
+                    error = "Error when fetching, please try again! Status Code : " + str(resp.status)
+                    return error
 
-######################################
-####   GETTING ONLY NODE STATUS   ####
-######################################
-"""
-def getallnodestats():
-    r = requests.get(base)
-    if r.status_code == 200:
-        nodestats = r.json()['nodestatus']
-        return nodestats        #  RETURNS ONLY NODES STATUS IN FORM OF DICTIONARY
-    else:
-        error = f"Error when fetching, please try again! Status Code : {r.status_code}"
-        return error
-###############################################
-######  GETTING A PARTICULAR NODE STATUS  #####
-###############################################
 
-def getnodestatus(val = None):
-    if val is None:
-        error = "Node number can't be of NoneType"
-        return error
-
-    else:
-        r = requests.get(base)
-        if r.status_code == 200:
-            jsonify = r.json()['nodestatus']
-            if int(val) == 0:
-                error = "Node 0 wasn't found!"
+async def getmiscstats():
+    """
+    Fetches miscellaneous statistics
+    """
+    async with aiohttp.ClientSession() as session:
+        async with session.get(base) as resp:
+            if resp.status == 200:
+                cache = await resp.json()
+                misc = cache['misc']
+                return(misc)
+            else:
+                error = "Error when fetching, please try again! Status Code : " + str(resp.status)
                 return error
-            elif int(val) < 0:
-                error = "Node number can't be a negative value!"
-                return error
-            elif int(val) > 0 and int(val) <= len(jsonify):
-                result = jsonify[f"Node{val}"]
-                return result                  # Returns Particular Node Status In Dictionary
-        else:
-            error = f"Error when fetching, please try again! Status Code : {r.status_code}"
-            return error
 
-##########################################
-#####  GETTING MISC STATUS     ##########
-##########################################
 
-def getmiscstatus():
-    r = requests.get(base)
-    if r.status_code == 200:
-        jsonify = r.json()['misc']
-        return(jsonify)
+async def getlavastats(val=1):
+    """
+    Fetches a particular node statistics
+    ...
+    Parameters
+    ----------
+    val : An int value, by default its set to 1
+    here, the lava node has to be inputted. Example: getlavastats(2) returns data for Node 2
+    """
+    if isinstance(val, int) is False:
+        raise ValueError("val parameter has to be integer only!")
+
     else:
-        error = f"Error when fetching, please try again! Status Code : {r.status_code}"
-        return error            # Returns Misc Status in form of Dictionary 
+        async with aiohttp.ClientSession() as session:
+            async with session.get(base) as resp:
+                if resp.status == 200:
+                    cache = await resp.json()
+                    misc = cache['misc']
+                    if int(val) == 0:
+                        error = "Lava0 wasn't found!"
+                        return error
+                    elif int(val) < 0:
+                        error = "Lava number can't be a negative value!"
+                        return error
+                    elif int(val) > 0 and int(val) <= len(misc):
+                        try:
+                            result = misc[f'Lava{val}']
+                        except KeyError as e:
+                            rerror = f"{e} was not found! "
+                            return rerror
+                        else:
+                            return result   # Returns True, if its online
 
-##########################################
-#####  GETTING LAVA STATUS     ##########
-##########################################
-
-def getlavastatus(val = None):
-    if val is None:
-        error = "Node number can't be of NoneType"
-        return error
-    else:
-        r = requests.get(base)
-        if r.status_code == 200:
-            jsonify = r.json()['misc']
-            if int(val) == 0:
-                error = "Lava0 wasn't found!"
-                return error
-            elif int(val) < 0:
-                error = "Lava number can't be a negative value!"
-                return error
-            elif int(val) > 0 and int(val) <= len(jsonify):
-                try:
-                    result = jsonify[f'Lava{val}']
-                except KeyError as e:
-                    rerror = f"{e} was not found! "
-                    return rerror   
                 else:
-                    return result   # Returns True, if its online
-                
-        else:
-            error = f"Error when fetching, please try again! Status Code : {r.status_code}"
-            return error
-#############################################
-####   GETTING ALL  SYSTEM INFORMATION   ####
-#############################################
-
-def getallsysinfo():
-    r = requests.get(sysinfo)
-    if r.status_code == 200:
-        sysstats = r.json()
-        return sysstats        #  RETURNS SYSTEM(NODE) INFORMATION STATUS IN FORM OF DICTIONARY
-    else:
-        error = f"Error when fetching, please try again! Status Code : {r.status_code}"
-        return error
+                    error = "Error when fetching, please try again! Status Code : " + str(resp.status)
+                    return error
 
 
-##############################################
-#########  GETTING PARTICULAR SYS INFO #######
-##############################################
-
-def getsysinfo(val = None):
-    if val is None:
-        error = "Node number can't be of NoneType"
-        return error
-    else:
-        r = requests.get(sysinfo)
-        if r.status_code == 200:
-            jsonify = r.json()
-            if int(val) == 0:
-                error = "Node 0 wasn't found!"
+async def getallsysinfo():
+    """
+    Fetches system info details from the data
+    """
+    async with aiohttp.ClientSession() as session:
+        async with session.get(base) as resp:
+            if resp.status == 200:
+                sysstats = await resp.json()
+                return sysstats
+            else:
+                error = "Error when fetching, please try again! Status Code : " + str(resp.status)
                 return error
-            elif int(val) < 0:
-                error = "Node number can't be a negative value!"
-                return error
-            elif int(val) > 0 and int(val) <= len(jsonify):
-                result = jsonify[f"Node{val}"]
-                return result                  # Returns Particular Node Status In Dictionary
-        else:
-            error = f"Error when fetching, please try again! Status Code : {r.status_code}"
-            return error
 
-#############################################
-#####    GETTING LEADERBOARD ################
-#############################################
-def getleaderboard():
-    r = requests.get(leaderboard)
-    if r.status_code == 200:
-        result = r.json()
-        return result  # Returns Leaderboard in list, where each list values are dictionary type
+
+async def getsysinfo(val=1):
+    """
+    Fetches a system information about a node
+    ...
+    Parameters
+    ----------
+    val : An int value, by default its set to 1
+    here, the node number has to be inputted. Example: getsysinfo(2) returns data for system of node 2
+    """
+    if isinstance(val, int) is False:
+        raise ValueError("val parameter has to be integer only!")
+
     else:
-        error = f"Error when fetching, please try again! Status Code : {r.status_code}"
-        return error
+        async with aiohttp.ClientSession() as session:
+            async with session.get(base) as resp:
+                if resp.status == 200:
+                    cache = await resp.json()
+                    if int(val) == 0:
+                        error = "Node 0 wasn't  found!"
+                        return error
+                    elif int(val) < 0:
+                        error = "Node number can't be a negative value!"
+                        return error
+                    elif int(val) > 0 and int(val) <= len(cache):
+                        result = cache[f"Node{val}"]
+                        return result
 
-"""
+                else:
+                    error = "Error when fetching, please try again! Status Code : " + str(resp.status)
+                    return error
 
 
-    
+async def getleaderboard():
+    """
+    Fetches the leaderboard in list format
+    """
+    async with aiohttp.ClientSession() as session:
+        async with session.get(base) as resp:
+            if resp.status == 200:
+                result = await resp.json()
+                return result
 
+            else:
+                error = "Error when fetching, please try again! Status Code : " + str(resp.status)
+                return error
