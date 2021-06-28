@@ -13,7 +13,7 @@ async def getallstats():
             if resp.status == 200:
                 return await resp.json()
             else:
-                error = f"Error when fetching, please try again! Status Code : " + str(resp.status)
+                error = "Error when fetching, please try again! Status Code : " + str(resp.status)
                 return error
 
 
@@ -28,7 +28,7 @@ async def getallnodestats():
                 nodestats = cache['nodestatus']
                 return nodestats
             else:
-                error = f"Error when fetching, please try again! Status Code : " + str(resp.status)
+                error = "Error when fetching, please try again! Status Code : " + str(resp.status)
                 return error
 
 
