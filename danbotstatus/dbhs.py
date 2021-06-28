@@ -2,16 +2,16 @@ import aiohttp
 
 class DBS():
     def __init__(self):
-        base = "https://danbot.host/nodeStatus"
-        sysinfo = 'https://danbot.host/sysinfo'
-        leaderboard = "https://api.danbot.host/leaderboard"
+        self.base = "https://danbot.host/nodeStatus"
+        self.sysinfo = 'https://danbot.host/sysinfo'
+        self.leaderboard = "https://api.danbot.host/leaderboard"
 
     async def getallstats():
     """
     Fetches the basic json from nodestatus 
     """
         async with aiohttp.ClientSession() as session:
-            async with session.get(base) as resp:
+            async with session.get(self.base) as resp:
                 if resp.status == 200:
                     return await resp.json()          ## RETURNS ALL STATUS IN DICTIONARY
                 else:
