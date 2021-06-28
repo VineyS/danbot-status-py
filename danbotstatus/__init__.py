@@ -1,4 +1,4 @@
-from .dbhs import DBS
+from .dbhs import *
 
 __name__ = "danbot-status"
 __version__ = "0.0.2"
