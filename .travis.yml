@@ -8,6 +8,7 @@ python:
   - "3.9"
 before_script:
   - pip3 install aiohttp>=3.6.0
+  - pip3 install requests>=2.22.0
   - cd danbotstatus
 script:
   - python3 __init__.py
