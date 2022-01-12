@@ -1,4 +1,6 @@
 import aiohttp
+from errors import *
+
 
 class AsynchronousStatus:
     def __init__(self):
@@ -13,10 +15,14 @@ class AsynchronousStatus:
         async with aiohttp.ClientSession() as session:
             async with session.get(self.base) as resp:
                 if resp.status == 200:
-                    return await resp.json()
+                    try:
+                        cache = resp.json()
+                    except Exception:
+                        raise APIError("Incorrect JSON format! Perhaps the API Structure has changed!")
+                    else:
+                        return cache
                 else:
-                    error = "Error when fetching, please try again! Status Code : " + str(resp.status)
-                    return error
+                    raise APIError("Danbot API is down! A Status Code of" + str(resp.status) + " was returned!")
 
 
     async def getallnodestats(self):
@@ -26,12 +32,15 @@ class AsynchronousStatus:
         async with aiohttp.ClientSession() as session:
             async with session.get(self.base) as resp:
                 if resp.status == 200:
-                    cache = await resp.json()
-                    nodestats = cache['nodestatus']
-                    return nodestats
+                    try:
+                        cache = await resp.json()
+                    except Exception:
+                        raise APIError("Incorrect JSON format! Perhaps the API Structure has changed!")
+                    else:
+                        nodestats = cache['nodestatus']
+                        return nodestats
                 else:
-                    error = "Error when fetching, please try again! Status Code : " + str(resp.status)
-                    return error
+                    raise APIError("Danbot API is down! A Status Code of" + str(resp.status) + " was returned!")
 
 
     async def getnodestats(self, val=1):
@@ -50,20 +59,23 @@ class AsynchronousStatus:
             async with aiohttp.ClientSession() as session:
                 async with session.get(self.base) as resp:
                     if resp.status == 200:
-                        cache = await resp.json()
-                        nodestatus = cache['nodestatus']
-                        if int(val) == 0:
-                            error = "Node 0 wasn't found!"
-                            raise error
-                        elif int(val) < 0:
-                            error = "Node number can't be a negative value!"
-                            return ValueError(error)
-                        elif int(val) > 0 and int(val) <= len(nodestatus):
-                            result = nodestatus["Node" + str(val)]
-                            return result                  # Returns Particular Node Status In Dictionary
+                        try:
+                            cache = await resp.json()
+                        except Exception:
+                            raise APIError("Incorrect JSON format! Perhaps the API Structure has changed!")
+                        else:
+                            nodestatus = cache['nodestatus']
+                            if int(val) == 0:
+                                raise NodeError("Node0 wasn't found!")
+                            elif int(val) < 0:
+                                raise NodeNegativeError("Node number can't be a negative value!")
+                            elif int(val) > 0 and int(val) <= len(nodestatus):
+                                result = nodestatus["Node" + str(val)]
+                                return result                  # Returns Particular Node Status In Dictionary
+                            else:
+                                raise NodeError("Node" + str(val) + " wasn't found!")
                     else:
-                        error = "Error when fetching, please try again! Status Code : " + str(resp.status)
-                        return error
+                        raise APIError("Danbot API is down! A Status Code of" + str(resp.status) + " was returned!")
 
 
     async def getmiscstats(self):
@@ -73,12 +85,15 @@ class AsynchronousStatus:
         async with aiohttp.ClientSession() as session:
             async with session.get(self.base) as resp:
                 if resp.status == 200:
-                    cache = await resp.json()
-                    misc = cache['misc']
-                    return(misc)
+                    try:
+                        cache = await resp.json()
+                    except Exception:
+                        raise APIError("Incorrect JSON format! Perhaps the API Structure has changed!")
+                    else:
+                        misc = cache['misc']
+                        return misc
                 else:
-                    error = "Error when fetching, please try again! Status Code : " + str(resp.status)
-                    return error
+                    raise APIError("Danbot API is down! A Status Code of" + str(resp.status) + " was returned!")
 
 
     async def getlavastats(self, val=1):
@@ -97,26 +112,28 @@ class AsynchronousStatus:
             async with aiohttp.ClientSession() as session:
                 async with session.get(self.base) as resp:
                     if resp.status == 200:
-                        cache = await resp.json()
-                        misc = cache['misc']
-                        if int(val) == 0:
-                            error = "Lava0 wasn't found!"
-                            return error
-                        elif int(val) < 0:
-                            error = "Lava number can't be a negative value!"
-                            return error
-                        elif int(val) > 0 and int(val) <= len(misc):
-                            try:
-                                result = misc['Lava' + str(val)]
-                            except KeyError as e:
-                                rerror = f"{e} was not found! "
-                                return rerror
+                        try:
+                            cache = await resp.json()
+                        except Exception:
+                            raise APIError("Incorrect JSON format! Perhaps the API Structure has changed!")
+                        else:
+                            misc = cache['misc']
+                            if int(val) == 0:
+                                raise LavaError("Lava Node 0 wasn't found!")
+                            elif int(val) < 0:
+                                raise LavaNegativeError("Lava Node number can't be a negative value!")
+                            elif int(val) > 0 and int(val) <= len(misc):
+                                try:
+                                    result = misc['Lava' + str(val)]
+                                except KeyError as e:
+                                    raise LavaError("Lava Node" + str(val) + " wasn't found!")
+                                else:
+                                    return result   # Returns True, if its online
                             else:
-                                return result   # Returns True, if its online
+                                raise LavaError("Lava Node" + str(val) + " wasn't found!")
 
                     else:
-                        error = "Error when fetching, please try again! Status Code : " + str(resp.status)
-                        return error
+                        raise APIError("Danbot API is down! A Status Code of" + str(resp.status) + " was returned!")
 
 
     async def getallsysinfo(self):
@@ -126,11 +143,14 @@ class AsynchronousStatus:
         async with aiohttp.ClientSession() as session:
             async with session.get(self.base) as resp:
                 if resp.status == 200:
-                    sysstats = await resp.json()
-                    return sysstats
+                    try:
+                        sysstats = await resp.json()
+                    except Exception:
+                        raise APIError("Incorrect JSON format! Perhaps the API Structure has changed!")
+                    else:
+                        return sysstats
                 else:
-                    error = "Error when fetching, please try again! Status Code : " + str(resp.status)
-                    return error
+                    raise APIError("Danbot API is down! A Status Code of" + str(resp.status) + " was returned!")
 
 
     async def getsysinfo(self, val=1):
@@ -149,20 +169,23 @@ class AsynchronousStatus:
             async with aiohttp.ClientSession() as session:
                 async with session.get(self.base) as resp:
                     if resp.status == 200:
-                        cache = await resp.json()
-                        if int(val) == 0:
-                            error = "Node 0 wasn't  found!"
-                            return error
-                        elif int(val) < 0:
-                            error = "Node number can't be a negative value!"
-                            return error
-                        elif int(val) > 0 and int(val) <= len(cache):
-                            result = cache["Node"+ str(val)]
-                            return result
+                        try:
+                            cache = await resp.json()
+                        except Exception:
+                            raise APIError("Incorrect JSON format! Perhaps the API Structure has changed!")
+                        else:
+                            if int(val) == 0:
+                                raise NodeError("Node 0 wasn't found!")
+                            elif int(val) < 0:
+                                raise NodeNegativeError("Node number can't be a negative value!")
+                            elif int(val) > 0 and int(val) <= len(cache):
+                                result = cache["Node"+ str(val)]
+                                return result
+                            else:
+                                raise NodeError("Node" + str(val) + " wasn't found!")
 
                     else:
-                        error = "Error when fetching, please try again! Status Code : " + str(resp.status)
-                        return error
+                        raise APIError("Danbot API is down! A Status Code of" + str(resp.status) + " was returned!")
 
 
     async def getleaderboard(self):
@@ -172,9 +195,12 @@ class AsynchronousStatus:
         async with aiohttp.ClientSession() as session:
             async with session.get(self.base) as resp:
                 if resp.status == 200:
-                    result = await resp.json()
-                    return result
+                    try:
+                        result = await resp.json()
+                    except Exception:
+                        raise APIError("Incorrect JSON format! Perhaps the API Structure has changed!")
+                    else:
+                        return result
 
                 else:
-                    error = "Error when fetching, please try again! Status Code : " + str(resp.status)
-                    return error
+                    raise APIError("Danbot API is down! A Status Code of" + str(resp.status) + " was returned!")
