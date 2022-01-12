@@ -1,5 +1,5 @@
 import requests
-from .errors import *
+from errors import *
 class SynchronousStatus:
     def __init__(self):
         self.base = "https://danbot.host/nodeStatus"
