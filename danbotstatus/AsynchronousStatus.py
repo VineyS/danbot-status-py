@@ -1,5 +1,5 @@
 import aiohttp
-from errors import *
+from .errors import *
 
 
 class AsynchronousStatus:
