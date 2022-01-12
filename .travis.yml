@@ -10,4 +10,4 @@ before_script:
   - pip3 install aiohttp>=3.6.0
   - cd danbotstatus
 script:
-  - python3 dbhs.py
+  - python3 __init__.py
