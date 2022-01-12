@@ -11,4 +11,6 @@ before_script:
   - pip3 install requests>=2.22.0
   - cd danbotstatus
 script:
-  - python3 __init__.py
+  - python3 errors.py
+  - python3 AsynchronousStatus.py
+  - python3 SynchronousStatus.py
