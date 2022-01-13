@@ -37,9 +37,13 @@ danbotstatus.AsynchronousStatus()  -->  For Asynchronous Coding
 
 # Errors
 danbotstatus.APIError()  ->  Thrown when the API is not responding or is down
+
 danbotstatus.NodeError()  ->  Thrown when the Node is not available
+
 danbotstatus.NodeNegaiveError()  ->  Thrown when the Node value passed is a negative value
+
 danbotstatus.LavaError()  ->  Thrown when the Lava node is not available
+
 danbotstatus.LavaNegativeError()  ->  Thrown when the Lava node value passed is a negative value
 
 # Basic Example Of danbotstatus in Asynchronous Environment In Discord Bot (discord.py)
