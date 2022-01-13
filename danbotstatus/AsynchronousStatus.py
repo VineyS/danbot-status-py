@@ -6,6 +6,9 @@ except:
 
 
 class AsynchronousStatus:
+    """
+    Base Class For Handling Danbot API Requests Asynchronously
+    """
     def __init__(self):
         self.base = "https://danbot.host/nodeStatus"
         self.sysinfo = 'https://danbot.host/sysinfo'

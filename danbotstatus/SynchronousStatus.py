@@ -4,6 +4,9 @@ try:
 except:
     from errors import *
 class SynchronousStatus:
+    """
+    Base Class For Handling Danbot API Requests Synchronously
+    """
     def __init__(self):
         self.base = "https://danbot.host/nodeStatus"
         self.sysinfo = 'https://danbot.host/sysinfo'
