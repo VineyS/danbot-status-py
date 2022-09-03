@@ -1,0 +1,6 @@
+[MASTER]
+disable=
+    C0114, # missing-module-docstring
+    C0113, # missing-class-docstring
+    C0301, # line-too-long  
+    W0107  # unnecessary-pass

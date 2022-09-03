@@ -6,11 +6,13 @@ python:
   - "3.7"
   - "3.8"
   - "3.9"
+  - "3.10"
 before_script:
   - pip3 install aiohttp>=3.6.0
   - pip3 install requests>=2.22.0
   - cd danbotstatus
 script:
+  - cd examples
   - python3 errors.py
-  - python3 AsynchronousStatus.py
-  - python3 SynchronousStatus.py
+  - python3 asynchronous.py
+  - python3 synchronous.py

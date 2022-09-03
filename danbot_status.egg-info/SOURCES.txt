@@ -6,7 +6,7 @@ danbot_status.egg-info/SOURCES.txt
 danbot_status.egg-info/dependency_links.txt
 danbot_status.egg-info/requires.txt
 danbot_status.egg-info/top_level.txt
-danbotstatus/AsynchronousStatus.py
-danbotstatus/SynchronousStatus.py
 danbotstatus/__init__.py
+danbotstatus/asynchronous.py
 danbotstatus/errors.py
+danbotstatus/synchronous.py

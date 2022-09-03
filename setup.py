@@ -5,7 +5,7 @@ with open("README.md", "r", encoding="utf-8") as fh:
 
 setuptools.setup(
     name="danbot-status", # Replace with your own username
-    version="0.1.1",
+    version="0.2.0",
     author="VineyS",
     author_email="vineypsunu@gmail.com",
     description="Status Of All Services of DanBotHost(DBH)",

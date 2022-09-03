@@ -1,8 +1,8 @@
-from .AsynchronousStatus import *
-from .SynchronousStatus import *
+from .asynchronous import *
+from .synchronous import *
 from .errors import *
 
-__name__ = "danbot-status"
-__version__ = "0.1.1"
+
+__version__ = "0.2.0"
 __author__ = "VineyS"
 __license__ = "MIT"
