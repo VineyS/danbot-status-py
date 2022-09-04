@@ -1,6 +1,5 @@
 # danbot-status
 ![travis-ci](https://travis-ci.com/VineyS/danbot-status-py.svg?branch=main)
-[![Pylint](https://github.com/VineyS/danbot-status-py/actions/workflows/pylint.yml/badge.svg)](https://github.com/VineyS/danbot-status-py/actions/workflows/pylint.yml)
 [![CodeQL](https://github.com/VineyS/danbot-status-py/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/VineyS/danbot-status-py/actions/workflows/codeql-analysis.yml)
 [![Upload Python Package](https://github.com/VineyS/danbot-status-py/actions/workflows/python-publish.yml/badge.svg)](https://github.com/VineyS/danbot-status-py/actions/workflows/python-publish.yml)
 
@@ -10,6 +9,9 @@ DanBot Status is a module built in python for getting all statistical services u
 - v0.0.2: Converted the module to a Asynchronous Package
 - v0.1.1: Added Support for Synchronous and Asynchronous Programming 
 - v0.2.0: Rewrote the module to use the new version of the API
+
+# Upgrade Module
+`pip install --upgrade danbot-status`
 
 # Installation
 `pip install danbot-status`  --> For Windows
@@ -32,8 +34,8 @@ danbotstatus.APIError()  ->  Thrown when the API is not responding or is down
 ` This method needs the module discord.py `
 ```py
 import discord
-from danbotstatus import AsynchronousStatus
-dbs = AsynchronousStatus()
+from danbotstatus import AsynchronousState()
+dbs = AsynchronousState()
 bot = discord.Client()
 
 @bot.event
@@ -54,8 +56,8 @@ bot.run("TOKEN")
 ` This method needs the module Flask `
 ```py
 from flask import Flask
-from danbotstatus import SynchronousStatus
-dbs = SynchronousStatus()
+from danbotstatus import SynchronousState
+dbs = SynchronousState()
 app = Flask(__name__)
 
 @app.route('/')
@@ -71,11 +73,11 @@ def nodestats():
 if __name__ == '__main__':
     app.run()
 ```
-# Basic Functions in the module (SynchronousStatus)
+# Basic Functions in the module (SynchronousState)
 *pssst, this is not an example , this just shows the functions the module has*
 ```py
 from danbotstatus import SynchronousState
-dbhs = danbotstatus.SynchronousStatus()
+dbhs = danbotstatus.SynchronousState()
 allnodestats = dbhs.fetch_all()   # Gets All Stats
 time = dbhs.fetch_time()   # Gets the time of the API
 names = dbhs.fetch_server_names()   # Gets the names of the nodes
@@ -86,10 +88,10 @@ print(time)  # This method returns a string
 print(names)  # This method returns a list
 print(stats)  # This method returns a dictionary
 ```
-# Basic Functions in the module (AsynchronousStatus)
+# Basic Functions in the module (AsynchronousState)
 *pssst, this is not an example , this just shows the functions the module has*
 ```py
-from danbotstatus import AsynchronousStatus
+from danbotstatus import AsynchronousState
 dbhs = AsynchronousState()
 allnodestats = await dbhs.fetch_all()   # Gets All Stats
 time = await dbhs.fetch_time()   # Gets the time of the API
