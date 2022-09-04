@@ -1,9 +1,0 @@
-README.md
-setup.py
-danbot_status_python.egg-info/PKG-INFO
-danbot_status_python.egg-info/SOURCES.txt
-danbot_status_python.egg-info/dependency_links.txt
-danbot_status_python.egg-info/requires.txt
-danbot_status_python.egg-info/top_level.txt
-danbotstatus/__init__.py
-danbotstatus/dbhs.py
