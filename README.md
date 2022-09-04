@@ -9,6 +9,7 @@ DanBot Status is a module built in python for getting all statistical services u
 - v0.0.2: Converted the module to a Asynchronous Package
 - v0.1.1: Added Support for Synchronous and Asynchronous Programming 
 - v0.2.0: Rewrote the module to use the new version of the API
+- v0.2.1: Fixed some README mistakes
 
 # Upgrade Module
 `pip install --upgrade danbot-status`
